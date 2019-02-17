@@ -33,6 +33,18 @@ $ terraform apply \
 -target=aws_iam_role.iam_for_lambda_s3_full_access
 ```
 
+## Destroy
+**Note:[s3] Only Empty buckets can be deleted** 
+
+```
+# all resource
+$ terraform destroy
+
+# specified resource
+$ terraform destroy \
+-target=aws_iam_role.iam_for_lambda_s3_full_access
+```
+
 ## Format
 ```
 $ terraform fmt
