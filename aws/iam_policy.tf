@@ -1,7 +1,7 @@
-resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda_logging"
+resource "aws_iam_policy" "lambda_invoke_s3_check_workflow_policy" {
+  name        = "lambda_invoke_s3_check_workflow_policy"
   path        = "/"
-  description = "IAM policy for logging from a lambda"
+  description = "s3_check_worklow invoke policy"
 
   policy = <<EOF
 {
@@ -10,11 +10,13 @@ resource "aws_iam_policy" "lambda_logging" {
     {
       "Effect": "Allow",
       "Action": [
-        "logs:CreateLogStream",
-        "logs:CreateLogGroup",
-        "logs:PutLogEvents"
+        "lambda:InvokeFunction"
       ],
-      "Resource": "arn:aws:logs:*:*:*"
+      "Resource": [
+        "${aws_lambda_function.s3_check_lambda.arn}",
+        "${aws_lambda_function.post_success_lambda.arn}",
+        "${aws_lambda_function.post_error_lambda.arn}"
+      ]
     }
   ]
 }
